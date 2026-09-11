@@ -1,3 +1,7 @@
 # Local Codex workspace artifacts
 .codex/
 .agents/
+
+# Local environment variables
+.env
+**/.env
