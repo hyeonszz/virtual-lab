@@ -1,0 +1,57 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+
+# 기본 언어와 실험 기능 설정
+language: ko-KR
+# Virtual Lab에 맞는 리뷰 관점
+tone_instructions: >
+  당신은 Virtual Lab 프로젝트의 코드 리뷰 파트너입니다.
+  핵심 문제만 구체적으로 지적하고, 원인·개선 방법·필요한 테스트를 함께 제안하세요.
+  보안, DB 마이그레이션, 인프라 비용·권한 문제는 우선적으로 검토하세요.
+# 검증되지 않은 실험 기능은 사용하지 않음
+early_access: false
+
+# 코드 리뷰 동작 설정
+reviews:
+# 과도한 지적보다 핵심 개선 사항을 중심으로 검토
+  profile: chill
+# 변경 요청으로 PR을 막지 않고 개선 의견만 제시
+  request_changes_workflow: false
+# PR 전체 변경 사항을 요약해 표시
+  high_level_summary: true
+# 호출 흐름이 복잡한 변경에는 시퀀스 다이어그램을 포함
+  sequence_diagrams: true
+# CodeRabbit 리뷰 상태를 PR에 표시
+  review_status: true
+# 보안과 인프라 설정을 자동 점검
+  tools:
+    gitleaks:
+      enabled: true
+    checkov:
+      enabled: true
+    yamllint:
+      enabled: true
+# PR 생성 시 자동 리뷰 실행
+  auto_review:
+    enabled: true
+# 새 커밋에서는 변경된 부분만 다시 검토
+    auto_incremental_review: true
+# 작성 중인 Draft PR은 자동 리뷰에서 제외
+    drafts: false
+# 경로별로 중점 검토 기준을 다르게 적용
+  path_instructions:
+    - path: "apps/api/**"
+      instructions: >
+        Spring Boot 계층 분리, 입력 검증, 예외 처리, 트랜잭션 경계, 보안상 민감정보 노출,
+        테스트 누락을 중점적으로 검토한다. 사소한 스타일 제안은 피하고, 주석은 한국어로 작성한다.
+    - path: "apps/api/src/main/resources/db/migration/**"
+      instructions: >
+        적용된 Flyway 마이그레이션 파일의 수정 여부를 확인한다. DROP, TRUNCATE, 데이터 손실,
+        롤백 불가능한 스키마 변경은 반드시 위험을 알린다.
+    - path: "infra/terraform/**"
+      instructions: >
+        비밀값 하드코딩, 공개 네트워크 접근, 과도한 IAM 권한, 비용이 발생할 수 있는 리소스를 검토한다.
+
+# CodeRabbit 채팅 응답 설정
+chat:
+# 별도 멘션 없이도 질문에 자동 응답
+  auto_reply: true
