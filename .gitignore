@@ -1,7 +1,66 @@
 # Local Codex workspace artifacts
 .codex/
 .agents/
+**/AGENTS.md
 
 # Local environment variables
 .env
 **/.env
+.env.*
+**/.env.*
+!.env.example
+!**/.env.example
+
+# IDE and editor settings
+.idea/
+**/.idea/
+.vscode/
+**/.vscode/
+*.iml
+*.iws
+*.ipr
+*.code-workspace
+/httpRequests/
+
+# Build outputs and local tool caches
+.gradle/
+**/.gradle/
+build/
+**/build/
+bin/
+out/
+target/
+**/target/
+node_modules/
+**/node_modules/
+.next/
+**/.next/
+dist/
+**/dist/
+coverage/
+**/coverage/
+
+# Infrastructure local state and credentials
+.terraform/
+**/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfvars.json
+credentials/
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+
+# Local logs and operating-system files
+*.log
+Thumbs.db
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Other local agent workspaces
+.claude/
